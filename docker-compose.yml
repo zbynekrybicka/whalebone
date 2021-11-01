@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  ui:
+    image: "nginx:latest"
+    ports:
+      - "8080:80"
+    volumes:
+      - "./ui:/usr/share/nginx/html"
+
+  backend:
+    build: ./backend
+    volumes:
+      - "./backend:/var/www/html"
+    ports:
+      - "8081:80"
+
+  db:
+      image: mysql
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_DATABASE: test_db
+      ports:
+        - "8082:3306"
+      volumes:
+        - ./db:/var/lib/mysql
+
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '8083:80'
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: password

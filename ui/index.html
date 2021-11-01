@@ -1,0 +1,55 @@
+<html>
+<body>
+    <div id="app">
+        <template v-if="!addDeviceFormShown">
+            <table>
+                <tr>
+                    <th @click="changeSortByHostname">Hostname
+                        <b v-if="sortByHostname === 'ASC'">^</b>
+                        <b v-if="sortByHostname === 'DESC'">v</b>
+                    </th>
+                    <th>Device type</th>
+                    <th>OS</th>
+                    <th @click="changeSortByOwner">Owner
+                        <b v-if="sortByOwner === 'ASC'">^</b>
+                        <b v-if="sortByOwner === 'DESC'">v</b>
+                    </th>
+                </tr>
+                <tr v-for="device in sortedDevices">
+                    <td>{{ device.hostname }}</td>
+                    <td>{{ device.device_type }}</td>
+                    <td>{{ device.os }}</td>
+                    <td>{{ device.owner }}</td>
+                </tr>
+            </table>
+            <button @click="showAddDeviceForm">Add device</button>
+        </template>
+        <template v-if="addDeviceFormShown">
+            <table>
+                <tr><td><input type="text" placeholder="Hostname" v-model="addDeviceForm.hostname" /></td></tr>
+                <tr>
+                    <td>
+                        <select v-model="addDeviceForm.device_type_id">
+                            <option></option>
+                            <option v-for="(title, index) in deviceTypes" :value="index" :key="index">{{ title }}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select v-model="addDeviceForm.os_id">
+                            <option></option>
+                            <option v-for="(title, index) in oss" :value="index" :key="index">{{ title }}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr><td><input type="text" placeholder="Owner" v-model="addDeviceForm.owner" /></td></tr>
+            </table>
+            <button @click="postDevice">Create device</button>
+        </template>
+    </div>
+    <script src="vue.js"></script>
+    <script src="axios.min.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

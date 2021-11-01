@@ -1,0 +1,7 @@
+parameters:
+
+
+database:
+	dsn: 'mysql:host=db;dbname=test_db'
+	user: root
+	password: password

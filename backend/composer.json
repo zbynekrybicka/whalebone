@@ -1,0 +1,5 @@
+{
+    "require": {
+        "ublaboo/api-router": "^4.2"
+    }
+}
